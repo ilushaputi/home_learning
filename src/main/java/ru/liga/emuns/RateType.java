@@ -1,4 +1,4 @@
-package ru.liga.constants;
+package ru.liga.emuns;
 
 public enum RateType {
     EUR,

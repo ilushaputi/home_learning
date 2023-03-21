@@ -1,6 +1,6 @@
-package ru.liga;
+package ru.liga.logic;
 
-import ru.liga.constants.RateType;
+import ru.liga.emuns.RateType;
 import ru.liga.object.ExchangeRateObj;
 import ru.liga.resource_reader.ResourceReader;
 
@@ -15,6 +15,8 @@ public class BusinessLogic {
     LocalDate today = LocalDate.now();
     Locale locale = new Locale("ru", "RU");
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy", locale);
+
+
 
     public void getTomorrowRate(RateType type) {
         if (type.equals(RateType.EUR)) {
@@ -46,12 +48,15 @@ public class BusinessLogic {
     public void getWeekRate(RateType type) {
         if (type.equals(RateType.EUR)) {
             getWeekRateByRateType(ResourceReader.listEUR, today);
+        } else if (type.equals(RateType.USD)){
+            getWeekRateByRateType(ResourceReader.listUSD, today);
+        } else if (type.equals(RateType.TRY)) {
+            getWeekRateByRateType(ResourceReader.listTRY, today);
         }
     }
 
     public void getWeekRateByRateType(List<ExchangeRateObj> list, LocalDate today) {
         List<ExchangeRateObj> outputListObjects = new ArrayList<>();
-        ExchangeRateObj obj = new ExchangeRateObj();
         int j = 0;
         while (j < 7){
             outputListObjects.add(list.get(j));
@@ -71,9 +76,10 @@ public class BusinessLogic {
     }
 
     public void printRate(ExchangeRateObj obj) {
+        float count = 100.0f;
         System.out.println(obj.getDate().getDayOfWeek().getDisplayName(TextStyle.SHORT, locale) +
                                                                        " " + obj.getDate().format(formatter) +
-                                                                       " - " + obj.getRate()
+                                                                       " - " + Math.round(obj.getRate() * count) / count
                                                                        );
     }
 }

@@ -1,3 +1,8 @@
-Project.class
-ConsolApp.class
-Task.class
+ConsoleApp.class
+ru/liga/object/ExchangeRateObj.class
+ru/liga/emuns/RateType.class
+ru/liga/resource_reader/ResourceReader.class
+ru/liga/object/ExchangeRateForecastApp.class
+ru/liga/input/CommandReader.class
+ru/liga/logic/BusinessLogic.class
+ru/liga/Main.class
