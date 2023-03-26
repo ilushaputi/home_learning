@@ -5,8 +5,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ru.liga</groupId>
-    <artifactId>exchange_rate_forecast_app</artifactId>
+    <artifactId>exchange-rate-forecast-app</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <dependencies>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 
 
     <properties>
@@ -28,7 +36,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>ru.liga.Main</mainClass>
+                            <mainClass>ru.liga.ExchangeRateForecastApp</mainClass>
                         </manifest>
                     </archive>
                     <!--Ignoring postfix jar-with-dependencies-->

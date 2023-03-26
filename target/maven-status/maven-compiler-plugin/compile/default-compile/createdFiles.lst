@@ -1,8 +1,8 @@
-ConsoleApp.class
-ru/liga/object/ExchangeRateObj.class
-ru/liga/emuns/RateType.class
-ru/liga/resource_reader/ResourceReader.class
-ru/liga/object/ExchangeRateForecastApp.class
-ru/liga/input/CommandReader.class
-ru/liga/logic/BusinessLogic.class
-ru/liga/Main.class
+ru/liga/enums/Command.class
+ru/liga/enums/FileName.class
+ru/liga/ExchangeRateForecastApp.class
+ru/liga/enums/RateType.class
+ru/liga/algorithms/RateCalculationAlgorithm.class
+ru/liga/reader/ResourceReader.class
+ru/liga/reader/CommandReader.class
+ru/liga/entity/ExchangeRateObj.class

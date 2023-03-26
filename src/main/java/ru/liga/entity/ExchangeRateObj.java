@@ -1,4 +1,4 @@
-package ru.liga.object;
+package ru.liga.entity;
 
 import java.time.LocalDate;
 

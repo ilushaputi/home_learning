@@ -1,8 +1,9 @@
-/home/ilya/IdeaProjects/home_learning/src/main/java/ru/liga/object/ExchangeRateForecastApp.java
 /home/ilya/IdeaProjects/home_learning/src/main/java/ru/liga/Main.java
-/home/ilya/IdeaProjects/home_learning/src/main/java/ConsoleApp.java
-/home/ilya/IdeaProjects/home_learning/src/main/java/ru/liga/resource_reader/ResourceReader.java
-/home/ilya/IdeaProjects/home_learning/src/main/java/ru/liga/input/CommandReader.java
-/home/ilya/IdeaProjects/home_learning/src/main/java/ru/liga/logic/BusinessLogic.java
-/home/ilya/IdeaProjects/home_learning/src/main/java/ru/liga/emuns/RateType.java
-/home/ilya/IdeaProjects/home_learning/src/main/java/ru/liga/object/ExchangeRateObj.java
+/home/ilya/IdeaProjects/home_learning/src/main/java/ru/liga/algorithms/RateCalculationAlgorithm.java
+/home/ilya/IdeaProjects/home_learning/src/main/java/ru/liga/reader/ResourceReader.java
+/home/ilya/IdeaProjects/home_learning/src/main/java/ru/liga/entity/ExchangeRateObj.java
+/home/ilya/IdeaProjects/home_learning/src/main/java/ru/liga/enums/FileName.java
+/home/ilya/IdeaProjects/home_learning/src/main/java/ru/liga/ExchangeRateForecastApp.java
+/home/ilya/IdeaProjects/home_learning/src/main/java/ru/liga/reader/CommandReader.java
+/home/ilya/IdeaProjects/home_learning/src/main/java/ru/liga/enums/RateType.java
+/home/ilya/IdeaProjects/home_learning/src/main/java/ru/liga/enums/Command.java
