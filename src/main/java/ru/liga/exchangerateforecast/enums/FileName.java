@@ -1,4 +1,4 @@
-package ru.liga.enums;
+package ru.liga.exchangerateforecast.enums;
 
 public enum FileName {
     FILE_EUR("EUR.csv"),

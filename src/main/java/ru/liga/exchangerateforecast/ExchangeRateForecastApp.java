@@ -1,10 +1,10 @@
-package ru.liga;
+package ru.liga.exchangerateforecast;
 
-import ru.liga.reader.CommandReader;
+import ru.liga.exchangerateforecast.reader.CommandReader;
 
 public class ExchangeRateForecastApp {
     private static final ExchangeRateForecastApp app = new ExchangeRateForecastApp();
-    private final CommandReader COMMANDREADER = new CommandReader();
+//    private final CommandReader commandReader = new CommandReader();
 
     public static void main(String[] args) {
         System.out.println("Exchange rate forecast app is start");
@@ -13,12 +13,10 @@ public class ExchangeRateForecastApp {
 
     public void startApp(){
 
-
+        CommandReader commandReader = new CommandReader();
         System.out.println("Enter \"HELP\" to see help-command");
 
-        COMMANDREADER.printHelpCommand();
-        COMMANDREADER.readCommand();
+        commandReader.printHelpCommand();
+        commandReader.readCommand();
     }
-
-
 }

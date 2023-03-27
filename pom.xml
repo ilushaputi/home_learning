@@ -36,7 +36,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>ru.liga.ExchangeRateForecastApp</mainClass>
+                            <mainClass>ru.liga.exchangerateforecast.ExchangeRateForecastApp</mainClass>
                         </manifest>
                     </archive>
                     <!--Ignoring postfix jar-with-dependencies-->

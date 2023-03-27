@@ -1,8 +1,8 @@
-package ru.liga.reader;
+package ru.liga.exchangerateforecast.reader;
 
-import ru.liga.enums.FileName;
-import ru.liga.enums.RateType;
-import ru.liga.entity.ExchangeRateObj;
+import ru.liga.exchangerateforecast.enums.FileName;
+import ru.liga.exchangerateforecast.enums.RateType;
+import ru.liga.exchangerateforecast.entity.ExchangeRateObj;
 
 import java.io.InputStream;
 import java.time.LocalDate;
@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class ResourceReader {
-    public   DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyy");
+    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyy");
 
     private final List<ExchangeRateObj> listEUR = readingFileByFileName(FileName.FILE_EUR);
     private final List<ExchangeRateObj> listTRY = readingFileByFileName(FileName.FILE_TRY);
@@ -63,6 +63,7 @@ public class ResourceReader {
         if (type.equals(RateType.TRY)) return getListTRY();
         if (type.equals(RateType.EUR)) return getListEUR();
         if (type.equals(RateType.USD)) return getListUSD();
-        return null;
+
+        throw new IllegalArgumentException("unknown currency type");
     }
 }
