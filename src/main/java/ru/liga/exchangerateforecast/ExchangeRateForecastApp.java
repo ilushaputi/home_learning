@@ -1,22 +1,17 @@
 package ru.liga.exchangerateforecast;
 
-import ru.liga.exchangerateforecast.reader.CommandReader;
+import org.telegram.telegrambots.meta.TelegramBotsApi;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
+import ru.liga.exchangerateforecast.bot.TelegramBot;
 
 public class ExchangeRateForecastApp {
-    private static final ExchangeRateForecastApp app = new ExchangeRateForecastApp();
-//    private final CommandReader commandReader = new CommandReader();
-
     public static void main(String[] args) {
-        System.out.println("Exchange rate forecast app is start");
-        app.startApp();
-    }
-
-    public void startApp(){
-
-        CommandReader commandReader = new CommandReader();
-        System.out.println("Enter \"HELP\" to see help-command");
-
-        commandReader.printHelpCommand();
-        commandReader.readCommand();
+        try {
+            TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
+            telegramBotsApi.registerBot(new TelegramBot());
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
     }
 }
