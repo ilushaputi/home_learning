@@ -1,20 +1,30 @@
 package ru.liga.exchangerateforecast.algorithms;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.liga.exchangerateforecast.enums.AlgorithmType;
+import ru.liga.exchangerateforecast.exeption.BusinessException;
+import ru.liga.exchangerateforecast.reader.ResourceReader;
 
 public class AlgorithmFactory {
-    public Algorithm createAlgorithmByAlgorithmType(AlgorithmType type) throws Exception {
+    private static final Logger logger = LoggerFactory.getLogger(AlgorithmFactory.class);
+
+    public Algorithm createAlgorithmByAlgorithmType(AlgorithmType type) throws BusinessException {
         switch (type) {
             case OLD:
-                return new OldRateCalculationAlgorithm();
+                logger.debug("Создан алгоритм: Старый");
+                return new OldRateCalculationAlgorithm(new ResourceReader());
             case LAST_YEAR:
-                return new LastYearRateCalculationAlgorithm();
+                logger.debug("Создан алгоритм: Прошлогодний");
+                return new LastYearRateCalculationAlgorithm(new ResourceReader());
             case MYSTIC:
-                return new MysticalRateCalculationAlgorithm();
+                logger.debug("Создан алгоритм: Мистический");
+                return new MysticalRateCalculationAlgorithm(new ResourceReader());
             case INTERNET:
-                return new InternetAlg();
+                logger.debug("Создан алгоритм: Алгоритм из интернета");
+                return new InternetRateCalculationAlgorithm();
         }
-
-        throw new Exception("Неизвестный алгоритм.\nВсе данные обнулены!\nНачните вводить команду с самого начала!");
+        logger.error("Не удалось создать алгоритм!");
+        throw new BusinessException("Не могу создать алгоритм!\nВедите команду сначала");
     }
 }

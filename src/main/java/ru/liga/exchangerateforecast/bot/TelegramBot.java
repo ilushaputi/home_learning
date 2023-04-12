@@ -1,23 +1,33 @@
 package ru.liga.exchangerateforecast.bot;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import ru.liga.exchangerateforecast.enums.Command;
-import ru.liga.exchangerateforecast.enums.OutputType;
-import ru.liga.exchangerateforecast.enums.Period;
-import ru.liga.exchangerateforecast.service.BusinessService;
-
-import javax.print.attribute.standard.MediaSize;
+import ru.liga.exchangerateforecast.entity.GraphResult;
+import ru.liga.exchangerateforecast.serviceforgraph.PrepareResponseForGraphService;
+import ru.liga.exchangerateforecast.serviceforlist.ParseMessageForListService;
+import ru.liga.exchangerateforecast.serviceforgraph.ParseMessageForGraphService;
 
 public class TelegramBot extends TelegramLongPollingBot {
+    private final Logger logger = LoggerFactory.getLogger(TelegramBot.class);
 
     private final String TOKEN_BOT = "6008144807:AAGvRvX4C76FeptwYQXALim79M5A4Vc8adY";
     private final String NAME_BOT = "exchangeLigaBot";
 
-    private final BusinessService businessService = new BusinessService();
+    private final ParseMessageForListService parseMessageForListService;
+    private final PrepareResponseForGraphService prepareResponseForGraphService;
+    private final ParseMessageForGraphService parseMessageForGraphService;
+
+    public TelegramBot(ParseMessageForListService parseMessageForListService, PrepareResponseForGraphService prepareResponseForGraphService, ParseMessageForGraphService parseMessageForGraphService) {
+        this.parseMessageForListService = parseMessageForListService;
+        this.prepareResponseForGraphService = prepareResponseForGraphService;
+        this.parseMessageForGraphService = parseMessageForGraphService;
+    }
 
     @Override
     public String getBotUsername() {
@@ -31,50 +41,55 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-
         if (update.hasMessage() && update.getMessage().hasText()) {
+            logger.debug("Принял сообщение: " + update.getMessage().getText());
             Message inputMessage = update.getMessage();
             String chatId = inputMessage.getChatId().toString();
-            String response = parseMessage(inputMessage.getText());
-            SendMessage outputMessage = new SendMessage();
-            outputMessage.setChatId(chatId);
-            outputMessage.setText(response);
-            try {
-                execute(outputMessage);
-            } catch (TelegramApiException e) {
-                e.printStackTrace();
+            if (inputMessage.getText().endsWith("graph")) {
+                GraphResult response = parseMessageForGraphResponse(inputMessage.getText());
+                sendResponseGraph(chatId, prepareResponseForGraphService.preparePhoto(response));
+            } else {
+                String response = parseMessageForStringResponse(inputMessage.getText());
+                sendResponseString(chatId, response);
             }
         }
     }
 
-    public String parseMessage(String textMessage) {
-        String response;
-        if (textMessage.equals(Command.START.toString())) {
-            response = "Бот готов к работе! \nНачните вводить команду";
-            businessService.clearResources();
-        } else if (textMessage.equals(Command.HELP.toString())) {
-            response = printHelpInformation();
-            businessService.clearResources();
-        } else if (textMessage.startsWith(Command.RATE.toString())) {
-            response = businessService.parseRateTypes(textMessage);
-        } else if (textMessage.startsWith(Command.DATE.toString())) {
-            response = businessService.parseDate(textMessage);
-        } else if (textMessage.startsWith(Command.PERIOD.toString())) {
-            response = businessService.parsePeriod(textMessage);
-        } else if (textMessage.startsWith(Command.ALGORITHM.toString())) {
-            response = businessService.parseAlgorithm(textMessage);
-        } else if (textMessage.startsWith(Command.OUTPUT.toString())) {
-            response = businessService.parseOutputType(textMessage);
-        } else {
-            businessService.clearResources();
-            response = "Не удалось распознать команду! \nНачните вводить команду с самого начала!";
+    private void sendResponseGraph(String chatId, SendPhoto sendPhoto) {
+        sendPhoto.setChatId(chatId);
+        try {
+            logger.debug("Попытка отправить ответ...");
+            execute(sendPhoto);
+            logger.debug("Ответ успешно отправлен!");
+        } catch (TelegramApiException e) {
+            logger.error("Не удалось отправить сообщение!");
+            logger.error(e.getMessage());
+            e.printStackTrace();
         }
-
-        return response;
     }
 
-    public String printHelpInformation() {
-        return "Какая-то команда помощи";
+    private void sendResponseString(String chatId, String response) {
+        SendMessage outputMessage = new SendMessage();
+        outputMessage.setChatId(chatId);
+        outputMessage.setText(response);
+        try {
+            logger.debug("Попытка отправить ответ...");
+            execute(outputMessage);
+            logger.debug("Ответ успешно отправлен!");
+        } catch (TelegramApiException e) {
+            logger.error("Не удалось отправить сообщение!");
+            logger.error(e.getMessage());
+            e.printStackTrace();
+        }
+    }
 
+    private String parseMessageForStringResponse(String textMessage) {
+        logger.debug("Начинаю парсить сообщение...");
+        return parseMessageForListService.parseMessageForStringResponse(textMessage);
+    }
+
+    private GraphResult parseMessageForGraphResponse(String textMessage) {
+        logger.debug("Начинаю парсить сообщение...");
+        return parseMessageForGraphService.parseMessageForGraphResponse(textMessage);
     }
 }

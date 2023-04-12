@@ -1,8 +1,8 @@
 package ru.liga.exchangerateforecast.reader;
 
+import ru.liga.exchangerateforecast.entity.ExchangeRateObj;
 import ru.liga.exchangerateforecast.enums.FileName;
 import ru.liga.exchangerateforecast.enums.RateType;
-import ru.liga.exchangerateforecast.entity.ExchangeRateObj;
 
 import java.io.InputStream;
 import java.time.LocalDate;

@@ -7,7 +7,7 @@ public enum Command {
     DATE("-date"),
     PERIOD("-period"),
     OUTPUT("-output"),
-    ALGORITHM("-alg"),
+    ALG("-alg"),
     RATE("rate");
 
     private String commandName;

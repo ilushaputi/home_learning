@@ -4,7 +4,7 @@ public enum AlgorithmType {
     OLD("old"),
     LAST_YEAR("lastyear"),
     MYSTIC("mystic"),
-    INTERNET("extra");
+    INTERNET("internet");
 
     private String algorithmName;
 

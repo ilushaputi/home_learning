@@ -7,6 +7,15 @@ public class ExchangeRateObj {
     private LocalDate date;
     private float rate;
 
+    public ExchangeRateObj(LocalDate date, float rate) {
+        this.date = date;
+        this.rate = rate;
+    }
+
+    public ExchangeRateObj() {
+
+    }
+
     public LocalDate getDate() {
         return date;
     }
